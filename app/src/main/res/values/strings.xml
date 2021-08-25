@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PMSU-Project</string>
+    <string-array name="registrationSpinner">
+        <item>Seller</item>
+        <item>Buyer</item>
+    </string-array>
+</resources>
