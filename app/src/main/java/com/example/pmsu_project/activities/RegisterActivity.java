@@ -8,8 +8,8 @@ import com.example.pmsu_project.dtos.RegisterBuyerDTO;
 import com.example.pmsu_project.dtos.RegisterSellerDTO;
 import com.example.pmsu_project.models.Buyer;
 import com.example.pmsu_project.models.Seller;
-import com.example.pmsu_project.services.BuyerService;
-import com.example.pmsu_project.services.SellerService;
+import com.example.pmsu_project.services.BuyerServices;
+import com.example.pmsu_project.services.SellerServices;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,9 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     static final String TAG = RegisterActivity.class.getSimpleName();
 
-    private BuyerService buyerService;
+    private BuyerServices buyerServices;
 
-    private SellerService sellerService;
+    private SellerServices sellerServices;
 
     private EditText registerFirstNameInput, registerLastNameInput,
             registerUsernameInput, registerPasswordInput,
@@ -49,8 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Log.i(TAG, "Register Activity Started");
 
-        buyerService = ApiUtils.getBuyerService();
-        sellerService = ApiUtils.getSellerService();
+        buyerServices = ApiUtils.getBuyerService();
+        sellerServices = ApiUtils.getSellerService();
 
         Spinner registrationSpinner = findViewById(R.id.registrationSpinner);
         ArrayAdapter<CharSequence> spinerAdapter = ArrayAdapter.createFromResource(this, R.array.registrationSpinner, android.R.layout.simple_spinner_item);
@@ -118,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                     registerNameInput.getText().toString()
             );
 
-            sellerService.registerSeller(registerSellerDTO).enqueue(new Callback<Seller>() {
+            sellerServices.registerSeller(registerSellerDTO).enqueue(new Callback<Seller>() {
                 @Override
                 public void onResponse(Call<Seller> call, Response<Seller> response) {
                     if(response.isSuccessful()) {
@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Seller> call, Throwable t) {
                     Log.i(TAG, "POST submited to API Failed");
-                    showResponse("Check your internet connection.");
+                    showResponse("Check your internet connection. ");
                 }
             });
         } else {
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                     registerAddressInput.getText().toString()
             );
 
-            buyerService.registerBuyer(registerBuyerDTO).enqueue(new Callback<Buyer>() {
+            buyerServices.registerBuyer(registerBuyerDTO).enqueue(new Callback<Buyer>() {
                 @Override
                 public void onResponse(Call<Buyer> call, Response<Buyer> response) {
                     if(response.isSuccessful()) {

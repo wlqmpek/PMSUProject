@@ -1,6 +1,15 @@
 package com.example.pmsu_project.retrofit;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.pmsu_project.LocalDateTimeDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -9,11 +18,12 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RetrofitClient {
     private static Retrofit retrofit = null;
     private static String baseUrlVar = null;
     public static String token = null;
-
+    private static Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer()).setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     public static Retrofit getClient(String baseUrl) {
         System.out.println("Getting retrofit");
@@ -24,7 +34,7 @@ public class RetrofitClient {
                 System.out.println("Getting retrofit 1");
                 retrofit = new Retrofit.Builder()
                         .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .build();
             }
         }
@@ -40,7 +50,8 @@ public class RetrofitClient {
                     return chain.proceed(newRequest);
                 }
             }).build();
-            retrofit = new Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
+
+            retrofit = new Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create(gson)).build();
         }
         return retrofit;
     }

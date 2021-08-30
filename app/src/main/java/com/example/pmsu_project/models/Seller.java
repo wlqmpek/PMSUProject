@@ -1,10 +1,11 @@
 package com.example.pmsu_project.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Seller extends User {
+public class Seller extends User implements Serializable {
     private LocalDate registrationDate;
     private String email;
     private String address;

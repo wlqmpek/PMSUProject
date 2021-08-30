@@ -1,73 +1,89 @@
 package com.example.pmsu_project.models;
 
 import com.auth0.android.jwt.JWT;
+import com.example.pmsu_project.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
 
 public class LoggedUser {
-    private String jwtToken;
-    private int userId;
-    private String username;
-    private ArrayList<Roles> roles = new ArrayList<>();
+    private static String jwtToken;
+    private static int userId;
+    private static String username;
+    private static Roles role;
+    private static boolean loggedIn = false;
 
-    public LoggedUser(String jwtToken) {
-        this.jwtToken = jwtToken;
-    }
+//    public LoggedUser(String jwtToken) {
+//        this.jwtToken = jwtToken;
+//    }
 
-    public LoggedUser login(String jwtToken) {
+//    public static LoggedUser login(String jwtToken) {
+//        JWT jwt = new JWT(jwtToken);
+//        jwtToken = jwtToken;
+//        this.userId = jwt.getClaim("userId").asInt();
+//        this.username = jwt.getSubject();
+//        this.roles.add(jwt.getClaim("roles").asArray(Roles.class)[0]);
+//        System.out.println(this);
+//
+//        return this;
+//    }
+
+    public static void login(String jwtToken) {
+        RetrofitClient.token = jwtToken;
         JWT jwt = new JWT(jwtToken);
-        this.jwtToken = jwtToken;
-        this.userId = jwt.getClaim("userId").asInt();
-        this.username = jwt.getSubject();
-        this.roles.add(jwt.getClaim("roles").asArray(Roles.class)[0]);
-        System.out.println(this);
-
-        return this;
+        LoggedUser.setJwtToken(jwtToken);
+        LoggedUser.setUserId(jwt.getClaim("userId").asInt());
+        LoggedUser.setUsername(jwt.getSubject());
+        LoggedUser.setRole(jwt.getClaim("roles").asArray(Roles.class)[0]);
+        LoggedUser.setLoggedIn(true);
     }
 
     public void logout() {
-
+        /// God help me.
+        RetrofitClient.token = null;
+        LoggedUser.setJwtToken(null);
+        LoggedUser.setRole(null);
+        LoggedUser.setUserId(0);
+        LoggedUser.setUsername(null);
+        LoggedUser.setLoggedIn(false);
     }
 
-    @Override
-    public String toString() {
-        return "LoggedUser{" +
-                "jwtToken='" + jwtToken + '\'' +
-                ", userId=" + userId +
-                ", username='" + username + '\'' +
-                ", roles=" + roles +
-                '}';
+    public static boolean isLoggedIn() {
+        return loggedIn;
     }
 
-    public String getJwtToken() {
+    public static void setLoggedIn(boolean loggedIn) {
+        LoggedUser.loggedIn = loggedIn;
+    }
+
+    public static String getJwtToken() {
         return jwtToken;
     }
 
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public static void setJwtToken(String jwtToken) {
+        LoggedUser.jwtToken = jwtToken;
     }
 
-    public int getUserId() {
+    public static int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public static void setUserId(int userId) {
+        LoggedUser.userId = userId;
     }
 
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static void setUsername(String username) {
+        LoggedUser.username = username;
     }
 
-    public ArrayList<Roles> getRoles() {
-        return roles;
+    public static Roles getRole() {
+        return role;
     }
 
-    public void setRoles(ArrayList<Roles> roles) {
-        this.roles = roles;
+    public static void setRole(Roles role) {
+        LoggedUser.role = role;
     }
 }

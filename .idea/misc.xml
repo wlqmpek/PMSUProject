@@ -3,9 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_list_buyer_undelivered_orders.xml" value="0.1" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_list_seller_articles.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_list_sellers.xml" value="0.4" />
         <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/finish_order_popup.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/list_buyer_articles_row.xml" value="0.6" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/list_seller_articles_row.xml" value="0.6" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/layout/list_sellers_row.xml" value="0.4" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/menu/buyer_menu.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/WLQMP/AndroidStudioProjects/PMSUProject/app/src/main/res/menu/menu.xml" value="0.27447916666666666" />
       </map>
     </option>
   </component>

@@ -14,6 +14,18 @@
         android:theme="@style/Theme.PMSUProject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ListDeliveredOrdersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".adapters.ListBuyerUndeliveredOrdersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ListSellerArticlesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ListSellersActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.CommentManagmentActivity"
             android:exported="true" />
         <activity

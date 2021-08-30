@@ -72,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i(TAG, "POST submited to API Sucessfuly " + response.body());
                     RetrofitClient.token = response.body().getJwt();
                     saveToSharedPreference(response.body().getJwt());
+                    Intent i=new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
                 } else {
                     Log.i(TAG, "POST submited to API Sucessfuly code = " + response.code());
                     showResponse("Invalid Cretentials, try again. " + response.code());
@@ -81,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JWTResponse> call, Throwable t) {
+                Log.i(TAG, "POST submited to API Sucessfuly code = " + t);
                 showResponse("Check your internet connection.");
             }
         } );

@@ -1,6 +1,8 @@
 package com.example.pmsu_project.models;
 
-public class Authority {
+import java.io.Serializable;
+
+public class Authority implements Serializable {
 
     private Long authorityId;
     private String name;
