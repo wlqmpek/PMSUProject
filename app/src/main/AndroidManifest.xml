@@ -14,10 +14,16 @@
         android:theme="@style/Theme.PMSUProject"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ListSellersArticles2Activity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.LeaveOrderFeedbackActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.ListDeliveredOrdersActivity"
             android:exported="true" />
         <activity
-            android:name=".adapters.ListBuyerUndeliveredOrdersActivity"
+            android:name=".activities.ListUndeliveredOrdersActivity"
             android:exported="true" />
         <activity
             android:name=".activities.ListSellerArticlesActivity"

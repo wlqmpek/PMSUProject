@@ -1,5 +1,6 @@
 package com.example.pmsu_project.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pmsu_project.ApiUtils;
@@ -12,6 +13,7 @@ import com.example.pmsu_project.services.AuthServices;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
 
         final EditText loginUsernameInput = findViewById(R.id.loginUsernameInput);
         final EditText loginPasswordInput = findViewById(R.id.loginPasswordInput);
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     public void sendPost(LoginDTO loginDTO) {
         authServices.login(loginDTO).enqueue(new Callback<JWTResponse>() {
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<JWTResponse> call, Response<JWTResponse> response) {
                 if(response.isSuccessful()) {

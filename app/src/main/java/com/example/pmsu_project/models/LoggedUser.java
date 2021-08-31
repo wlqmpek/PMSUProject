@@ -1,5 +1,10 @@
 package com.example.pmsu_project.models;
 
+import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.auth0.android.jwt.JWT;
 import com.example.pmsu_project.retrofit.RetrofitClient;
 
@@ -7,7 +12,7 @@ import java.util.ArrayList;
 
 public class LoggedUser {
     private static String jwtToken;
-    private static int userId;
+    private static long userId;
     private static String username;
     private static Roles role;
     private static boolean loggedIn = false;
@@ -27,6 +32,7 @@ public class LoggedUser {
 //        return this;
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void login(String jwtToken) {
         RetrofitClient.token = jwtToken;
         JWT jwt = new JWT(jwtToken);
@@ -37,8 +43,10 @@ public class LoggedUser {
         LoggedUser.setLoggedIn(true);
     }
 
-    public void logout() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void logout(Context context) {
         /// God help me.
+        context.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE).edit().clear().commit();
         RetrofitClient.token = null;
         LoggedUser.setJwtToken(null);
         LoggedUser.setRole(null);
@@ -63,11 +71,11 @@ public class LoggedUser {
         LoggedUser.jwtToken = jwtToken;
     }
 
-    public static int getUserId() {
+    public static long getUserId() {
         return userId;
     }
 
-    public static void setUserId(int userId) {
+    public static void setUserId(long userId) {
         LoggedUser.userId = userId;
     }
 

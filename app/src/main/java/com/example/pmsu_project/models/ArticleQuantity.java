@@ -1,6 +1,8 @@
 package com.example.pmsu_project.models;
 
-public class ArticleQuantity {
+import java.io.Serializable;
+
+public class ArticleQuantity implements Serializable {
 
     private Long articleQuantityId;
     private Long orderId;

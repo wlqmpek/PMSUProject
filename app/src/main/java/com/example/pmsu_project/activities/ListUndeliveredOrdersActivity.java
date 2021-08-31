@@ -1,16 +1,15 @@
-package com.example.pmsu_project.adapters;
+package com.example.pmsu_project.activities;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
-import com.example.pmsu_project.activities.ListSellerArticlesActivity;
 import com.example.pmsu_project.models.Order;
 import com.example.pmsu_project.services.OrderServices;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListBuyerUndeliveredOrdersActivity extends AppCompatActivity {
+public class ListUndeliveredOrdersActivity extends AppCompatActivity {
 
-    static final String TAG = ListBuyerUndeliveredOrdersActivity.class.getSimpleName();
+    static final String TAG = ListUndeliveredOrdersActivity.class.getSimpleName();
 
     private OrderServices orderServices;
     private List<Order> orders = new ArrayList<>();
@@ -29,14 +28,14 @@ public class ListBuyerUndeliveredOrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_buyer_undelivered_orders);
+        setContentView(R.layout.activity_list_undelivered_orders);
 
         orderServices = ApiUtils.getOrderService();
 
         orderServices.getUnedeliveredOrders().enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     Log.i(TAG, "Success " + response.code());
                 } else {
 
@@ -51,6 +50,6 @@ public class ListBuyerUndeliveredOrdersActivity extends AppCompatActivity {
     }
 
     public void showResponse(String response) {
-        Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
     }
 }

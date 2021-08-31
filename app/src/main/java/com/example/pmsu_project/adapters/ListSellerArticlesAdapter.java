@@ -1,8 +1,6 @@
 package com.example.pmsu_project.adapters;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.R;
-import com.example.pmsu_project.activities.ListSellerArticlesActivity;
-import com.example.pmsu_project.activities.ListSellersActivity;
 import com.example.pmsu_project.models.Article;
-import com.example.pmsu_project.models.Seller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +59,7 @@ public class ListSellerArticlesAdapter extends RecyclerView.Adapter<ListSellerAr
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.listArticleNameTextView1);
-            price = itemView.findViewById(R.id.listArticlePriceTextView1);
+            price = itemView.findViewById(R.id.listArticlePriceTextView2);
             aSwitch = itemView.findViewById(R.id.listArticleOnSaleSwitch1);
             aSwitch.setClickable(false);
             quantity = itemView.findViewById(R.id.listArticleQuantityEditText1);

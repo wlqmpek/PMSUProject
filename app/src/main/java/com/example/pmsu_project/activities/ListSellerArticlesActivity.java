@@ -1,5 +1,6 @@
 package com.example.pmsu_project.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,23 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
-import com.example.pmsu_project.adapters.ListBuyerUndeliveredOrdersActivity;
 import com.example.pmsu_project.adapters.ListFinishOrderArticlesAdapter;
 import com.example.pmsu_project.adapters.ListSellerArticlesAdapter;
 import com.example.pmsu_project.dtos.CreateArticleQuantityDTO;
 import com.example.pmsu_project.dtos.CreateInitialOrderDTO;
 import com.example.pmsu_project.models.Article;
+import com.example.pmsu_project.models.LoggedUser;
 import com.example.pmsu_project.models.Order;
 import com.example.pmsu_project.models.Seller;
 import com.example.pmsu_project.services.ArticleServices;
 import com.example.pmsu_project.services.OrderServices;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +53,8 @@ public class ListSellerArticlesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<EditText> recycleViewEditFields = new ArrayList<>();
 
+    private Context context;
+
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private Button finishShoping;
@@ -62,6 +66,7 @@ public class ListSellerArticlesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_seller_articles);
+        setSupportActionBar(findViewById(R.id.listSellerArticlesToolbar));
         Seller seller = (Seller) getIntent().getSerializableExtra("Seller");
 //        showResponse(seller.toString());
 
@@ -164,7 +169,7 @@ public class ListSellerArticlesActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     Log.i(TAG, "POST submited to API Successfully " + response.code());
                     showResponse(response.body().toString());
-                    Intent i=new Intent(ListSellerArticlesActivity.this, ListBuyerUndeliveredOrdersActivity.class);
+                    Intent i=new Intent(ListSellerArticlesActivity.this, ListUndeliveredOrdersActivity.class);
                     startActivity(i);
                 } else {
                     Log.i(TAG, "POST submited to API Sucessffully code = " + response.code());
@@ -177,6 +182,36 @@ public class ListSellerArticlesActivity extends AppCompatActivity {
                 showResponse("Check your internet connection. " + t);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.buyer_menu, menu);
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.sellers) {
+            Intent i = new Intent(ListSellerArticlesActivity.this, ListDeliveredOrdersActivity.class);
+            context.startActivity(i);
+            showResponse("Sellers");
+        } else if(id == R.id.delivered) {
+            Intent i = new Intent(ListSellerArticlesActivity.this, ListDeliveredOrdersActivity.class);
+            context.startActivity(i);
+//            showResponse("Delivered");
+        } else if(id == R.id.undelivered) {
+            showResponse("Undelivered");
+        } else if(id == R.id.logout) {
+            showResponse("Logout");
+            LoggedUser.logout(this);
+            Intent i = new Intent(ListSellerArticlesActivity.this, LoginActivity.class);
+            context.startActivity(i);
+        }
+        return true;
     }
 
     public void showResponse(String response) {

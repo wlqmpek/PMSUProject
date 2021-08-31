@@ -1,6 +1,7 @@
 package com.example.pmsu_project.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
 import com.example.pmsu_project.adapters.ListSellersRecycleViewAdapter;
+import com.example.pmsu_project.models.LoggedUser;
 import com.example.pmsu_project.models.Seller;
 import com.example.pmsu_project.services.SellerServices;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -77,21 +81,27 @@ public class ListSellersActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if(id == R.id.sellers) {
+            Intent i = new Intent(ListSellersActivity.this, ListDeliveredOrdersActivity.class);
+            context.startActivity(i);
             showResponse("Sellers");
         } else if(id == R.id.delivered) {
-            showResponse("Delivered");
+            Intent i = new Intent(ListSellersActivity.this, ListDeliveredOrdersActivity.class);
+            context.startActivity(i);
+//            showResponse("Delivered");
         } else if(id == R.id.undelivered) {
             showResponse("Undelivered");
         } else if(id == R.id.logout) {
             showResponse("Logout");
+            LoggedUser.logout(this);
+            Intent i = new Intent(ListSellersActivity.this, LoginActivity.class);
+            context.startActivity(i);
         }
-
-//        return super.onOptionsItemSelected(item);
         return true;
     }
 

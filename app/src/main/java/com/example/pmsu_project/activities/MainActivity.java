@@ -1,10 +1,12 @@
 package com.example.pmsu_project.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     static final String TAG = LoginActivity.class.getSimpleName();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         checkWhichUserIsLoggedIn();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void checkWhichUserIsLoggedIn() {
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
         if(sharedPreferences.contains("token")) {
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             // Seller is logged in
             if(LoggedUser.getRole().getName().equals("ROLE_SELLER")) {
                 showResponse("Ulogovan je prodavac.");
+                Intent i=new Intent(MainActivity.this, ListSellersArticles2Activity.class);
+                startActivity(i);
                 // Buyer is loggedIn
             } else if(LoggedUser.getRole().getName().equals("ROLE_BUYER")) {
                 showResponse("Ulogovan je kupac.");
