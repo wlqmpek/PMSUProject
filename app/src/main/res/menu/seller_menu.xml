@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="My Articles"
+        android:id="@+id/myArticles"/>
+
+    <item
+        android:title="Create Article"
+        android:id="@+id/createArticle"/>
+
+    <item
+        android:title="Create Discount"
+        android:id="@+id/discount"/>
+
+    <item
+        android:title="Comment Managment"
+        android:id="@+id/commentManagment"/>
+
+    <item
+        android:title="Logout"
+        android:id="@+id/logout"/>
+</menu>

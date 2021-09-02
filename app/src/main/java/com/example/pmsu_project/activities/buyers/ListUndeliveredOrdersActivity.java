@@ -1,9 +1,10 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.buyers;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pmsu_project.ApiUtils;
@@ -14,10 +15,6 @@ import com.example.pmsu_project.services.OrderServices;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ListUndeliveredOrdersActivity extends AppCompatActivity {
 
     static final String TAG = ListUndeliveredOrdersActivity.class.getSimpleName();
@@ -25,6 +22,7 @@ public class ListUndeliveredOrdersActivity extends AppCompatActivity {
     private OrderServices orderServices;
     private List<Order> orders = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,23 +30,8 @@ public class ListUndeliveredOrdersActivity extends AppCompatActivity {
 
         orderServices = ApiUtils.getOrderService();
 
-        orderServices.getUnedeliveredOrders().enqueue(new Callback<List<Order>>() {
-            @Override
-            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                if (response.isSuccessful()) {
-                    Log.i(TAG, "Success " + response.code());
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Order>> call, Throwable t) {
-
-            }
-        });
     }
-
+;
     public void showResponse(String response) {
         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
     }

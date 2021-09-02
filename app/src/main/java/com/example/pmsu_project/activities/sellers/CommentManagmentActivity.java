@@ -1,4 +1,4 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.sellers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.pmsu_project.R;

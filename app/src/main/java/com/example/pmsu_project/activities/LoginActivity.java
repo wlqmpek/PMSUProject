@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private AuthServices authServices;
     SharedPreferences sharedPreferences;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

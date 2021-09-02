@@ -1,6 +1,7 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.buyers;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import com.example.pmsu_project.services.OrderServices;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +37,7 @@ public class LeaveOrderFeedbackActivity extends AppCompatActivity {
     private List<Article> articles = new ArrayList<>();
     private Order order;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +53,7 @@ public class LeaveOrderFeedbackActivity extends AppCompatActivity {
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
                 if(response.isSuccessful()) {
                     articles = response.body();
-                    for(Article article:articles) {
-                        showResponse(article.toString());
-                    }
+
                 }
             }
 

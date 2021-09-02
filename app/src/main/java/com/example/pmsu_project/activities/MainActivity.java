@@ -12,9 +12,9 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.buyers.ListSellersActivity;
+import com.example.pmsu_project.activities.sellers.ListSellersArticles2Activity;
 import com.example.pmsu_project.models.LoggedUser;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG = LoginActivity.class.getSimpleName();

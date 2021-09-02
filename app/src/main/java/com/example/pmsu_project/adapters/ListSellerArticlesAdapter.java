@@ -58,7 +58,7 @@ public class ListSellerArticlesAdapter extends RecyclerView.Adapter<ListSellerAr
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.listArticleNameTextView1);
+            name = itemView.findViewById(R.id.listArticleNameTextView2);
             price = itemView.findViewById(R.id.listArticlePriceTextView2);
             aSwitch = itemView.findViewById(R.id.listArticleOnSaleSwitch1);
             aSwitch.setClickable(false);

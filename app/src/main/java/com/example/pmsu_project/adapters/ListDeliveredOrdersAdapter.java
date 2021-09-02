@@ -14,8 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.R;
-import com.example.pmsu_project.activities.LeaveOrderFeedbackActivity;
-import com.example.pmsu_project.activities.ListSellerArticlesActivity;
+import com.example.pmsu_project.activities.sellers.EditArticleActivity;
 import com.example.pmsu_project.models.Order;
 
 import java.time.format.DateTimeFormatter;
@@ -66,7 +65,7 @@ public class ListDeliveredOrdersAdapter extends RecyclerView.Adapter<ListDeliver
 
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(context, LeaveOrderFeedbackActivity.class);
+            Intent i = new Intent(context, EditArticleActivity.class);
             i.putExtra("order", orders.get(getAdapterPosition()));
             context.startActivity(i);
         }

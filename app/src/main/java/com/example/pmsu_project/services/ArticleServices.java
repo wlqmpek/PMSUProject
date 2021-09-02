@@ -2,11 +2,13 @@ package com.example.pmsu_project.services;
 
 import com.example.pmsu_project.dtos.CreateArticleDTO;
 import com.example.pmsu_project.models.Article;
+import com.example.pmsu_project.models.Picture;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -39,8 +41,11 @@ public interface ArticleServices {
 
     @Multipart
     @POST("articles/picture")
-    Call<Long> saveImage(@Part MultipartBody.Part picture);
+    Call<Long> saveImage(@Part MultipartBody.Part image);
 
     @DELETE("articles/{id}")
     Call<Response> deleteArticle(@Path("id") Long id);
+
+    @GET("articles/picture/{id}")
+    Call<Picture> getArticleImage(@Path("id") Long id);
 }

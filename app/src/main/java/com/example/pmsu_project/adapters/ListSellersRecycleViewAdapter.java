@@ -12,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.R;
-import com.example.pmsu_project.activities.ListSellerArticlesActivity;
-import com.example.pmsu_project.activities.ListSellersActivity;
+import com.example.pmsu_project.activities.buyers.ListSellerArticlesActivity;
 import com.example.pmsu_project.models.Seller;
 
 import java.util.ArrayList;

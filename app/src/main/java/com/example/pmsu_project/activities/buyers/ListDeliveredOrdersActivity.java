@@ -1,4 +1,4 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.LoginActivity;
 import com.example.pmsu_project.adapters.ListDeliveredOrdersAdapter;
 import com.example.pmsu_project.models.LoggedUser;
 import com.example.pmsu_project.models.Order;
@@ -50,7 +51,6 @@ public class ListDeliveredOrdersActivity extends AppCompatActivity {
         orderServices = ApiUtils.getOrderService();
 
         recyclerView = findViewById(R.id.listDeliveredOrdersRecyclerView);
-        showResponse(String.valueOf(recyclerView == null));
         listDeliveredOrdersAdapter = new ListDeliveredOrdersAdapter(this);
         recyclerView.setAdapter(listDeliveredOrdersAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -89,7 +89,6 @@ public class ListDeliveredOrdersActivity extends AppCompatActivity {
         if(id == R.id.sellers) {
             Intent i = new Intent(ListDeliveredOrdersActivity.this, ListSellersActivity.class);
             context.startActivity(i);
-            showResponse("Sellers");
         } else if(id == R.id.delivered) {
             Intent i = new Intent(ListDeliveredOrdersActivity.this, ListDeliveredOrdersActivity.class);
             context.startActivity(i);
@@ -97,7 +96,6 @@ public class ListDeliveredOrdersActivity extends AppCompatActivity {
         } else if(id == R.id.undelivered) {
             showResponse("Undelivered");
         } else if(id == R.id.logout) {
-            showResponse("Logout");
             LoggedUser.logout(this);
             Intent i = new Intent(ListDeliveredOrdersActivity.this, LoginActivity.class);
             context.startActivity(i);

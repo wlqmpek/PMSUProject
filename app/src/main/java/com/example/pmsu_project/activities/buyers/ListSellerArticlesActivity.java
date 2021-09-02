@@ -1,4 +1,4 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.LoginActivity;
 import com.example.pmsu_project.adapters.ListFinishOrderArticlesAdapter;
 import com.example.pmsu_project.adapters.ListSellerArticlesAdapter;
 import com.example.pmsu_project.dtos.CreateArticleQuantityDTO;

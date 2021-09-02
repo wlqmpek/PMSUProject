@@ -1,4 +1,4 @@
-package com.example.pmsu_project.activities;
+package com.example.pmsu_project.activities.buyers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.LoginActivity;
 import com.example.pmsu_project.adapters.ListSellersRecycleViewAdapter;
 import com.example.pmsu_project.models.LoggedUser;
 import com.example.pmsu_project.models.Seller;
@@ -20,7 +21,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
