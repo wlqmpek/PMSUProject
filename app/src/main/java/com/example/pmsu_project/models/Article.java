@@ -1,9 +1,10 @@
 package com.example.pmsu_project.models;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Article {
+public class Article implements Serializable {
     private Long articleId;
     private String name;
     private String description;

@@ -108,8 +108,8 @@ public class CreateArticleActivity extends AppCompatActivity {
                 File file = new File(imageUri.getPath());
 //                showResponse(getRealPathFromURI(context, imageUri));
                 RequestBody requestBody = RequestBody.create(new File(getPath(imageUri)), MediaType.parse("multipart/form-data"));
-                MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
-                articleServices.saveImage(body).enqueue(new Callback<Long>() {
+                MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestBody);
+                articleServices.savePicture(body).enqueue(new Callback<Long>() {
                     @Override public void onResponse(Call<Long> call, Response<Long> response) {
                         if(response.isSuccessful()) {
                             idArtikla = response.body();
@@ -119,7 +119,7 @@ public class CreateArticleActivity extends AppCompatActivity {
                                     if(response.isSuccessful()) {
                                         showResponse("Success " + response.code());
                                     } else {
-                                        showResponse("Kurcina " + response.code());
+                                        showResponse("Nope " + response.code());
                                     }
                                 }
 

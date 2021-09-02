@@ -1,42 +1,39 @@
-package com.example.pmsu_project.activities.sellers;
+package com.example.pmsu_project.activities.buyers;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.pmsu_project.ApiUtils;
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.LoginActivity;
 import com.example.pmsu_project.activities.RegisterActivity;
-import com.example.pmsu_project.dtos.CreateArticleDTO;
 import com.example.pmsu_project.models.Article;
+import com.example.pmsu_project.models.LoggedUser;
 import com.example.pmsu_project.models.Picture;
 import com.example.pmsu_project.services.ArticleServices;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,57 +43,51 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditArticleActivity extends AppCompatActivity {
+public class ViewArticleDetailsActivity extends AppCompatActivity {
 
-    static final String TAG = EditArticleActivity.class.getSimpleName();
-    private static final int REQUEST_CODE_SELECT_IMAGE = 0;
-    private static final int REQUEST_CODE_STORAGE_PREMISSION = 1;
+    static final String TAG = ViewArticleDetailsActivity.class.getSimpleName();
+
+    private Context context = this;
 
     private ArticleServices articleServices;
-    private String picturePath;
-    private Button buttonEdit;
+
+    private TextView name, price, description, onSale;
     private ImageView imageView;
-    private EditText name, description, price;
-    private TextView id;
-    private Article article;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 0;
+    private static final int REQUEST_CODE_STORAGE_PREMISSION = 1;
+    private Long articleId;
     private Uri imageUri;
+    private String picturePath;
+    private Article article;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_article);
-        setSupportActionBar(findViewById(R.id.createArticle));
-        Intent i = getIntent();
-        Long articleId = i.getLongExtra("articleId", 0);
+        setContentView(R.layout.activity_view_article_details);
+        setSupportActionBar(findViewById(R.id.articleDetailsToolbar));
+        article = (Article) getIntent().getSerializableExtra("Article");
+
         articleServices = ApiUtils.getArticleService();
 
-        buttonEdit = findViewById(R.id.editArticleButtonEdit);
-        imageView = findViewById(R.id.editArticleImageView);
-        name = findViewById(R.id.editArticleEditTextName);
-        description = findViewById(R.id.editArticleEditTextDescription);
-        price = findViewById(R.id.editArticleEditTextPrice);
-        id = findViewById(R.id.editArticleArticleIdTextView);
+        name = findViewById(R.id.viewArticleTextViewName);
+        price = findViewById(R.id.viewArticleTextViewPrice);
+        description = findViewById(R.id.viewArticleTextViewDesc);
+        description.setFocusable(false);
+        onSale = findViewById(R.id.viewArticleTextViewOnSale);
+        imageView = findViewById(R.id.viewArticleImageView);
 
-
-        articleServices.getArticle(articleId).enqueue(new Callback<Article>() {
+        articleServices.getArticle(article.getArticleId()).enqueue(new Callback<Article>() {
             @Override
             public void onResponse(Call<Article> call, Response<Article> response) {
-                if (response.isSuccessful()) {
+                if(response.isSuccessful()) {
                     article = response.body();
-                    name.setText(article.getName());
-                    description.setText(article.getDescription());
-                    price.setText(String.valueOf(article.getPrice()));
-                    id.setText(String.valueOf(article.getArticleId()));
+                    populateFields();
                 }
             }
 
@@ -106,14 +97,13 @@ public class EditArticleActivity extends AppCompatActivity {
             }
         });
 
-        articleServices.getArticlePicture(articleId).enqueue(new Callback<Picture>() {
+        articleServices.getArticlePicture(article.getArticleId()).enqueue(new Callback<Picture>() {
             @Override
             public void onResponse(Call<Picture> call, Response<Picture> response) {
                 if(response.isSuccessful()) {
                     Picture picture = response.body();
                     picturePath = savePictureToStorage(picture);
-                    imageUri = Uri.parse(picturePath);
-                    showResponse("Image uri " + imageUri);
+
                     File imgFile = new  File(picturePath);
                     if(imgFile.exists()){
 
@@ -132,50 +122,23 @@ public class EditArticleActivity extends AppCompatActivity {
 
             }
         });
-
-        imageView.setOnClickListener(v -> {
-            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(EditArticleActivity.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PREMISSION);
-            } else {
-                selectImage();
-            }
-        });
+    }
 
 
-        addEditArticleButtonFunctionality();
 
+    private void populateFields() {
+        name.setText(article.getName());
+        description.setText(article.getDescription());
+        price.setText(String.valueOf(article.getPrice()));
+        if(article.isOnSale()) {
+            onSale.setText("ON SALE!");
+        } else {
+            onSale.setText("NOT ON SALE!");
+        }
 
 
     }
 
-    private void addEditArticleButtonFunctionality() {
-        buttonEdit.setOnClickListener(v -> {
-            CreateArticleDTO createArticleDTO = new CreateArticleDTO(
-                    name.getText().toString(),
-                    description.getText().toString(),
-                    Double.parseDouble(price.getText().toString())
-            );
-            articleServices.updateArticle(article.getArticleId(), createArticleDTO).enqueue(new Callback<Article>() {
-                @Override
-                public void onResponse(Call<Article> call, Response<Article> response) {
-                    if(response.isSuccessful()) {
-                        File file = new File(picturePath);
-                        RequestBody requestBody = RequestBody.create(new File(getPath(imageUri)), MediaType.parse("multipart/form-data"));
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestBody);
-                        articleServices.updateArticlePicture(article.getArticleId(), body);
-                    } else {
-                        showResponse("Fail " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Article> call, Throwable t) {
-                    showResponse("Fail " + t.toString());
-                }
-            });
-        });
-    }
 
     public String getPath(Uri uri) {
         showResponse("Image uri x2 " + uri);
@@ -273,21 +236,35 @@ public class EditArticleActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.buyer_menu, menu);
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.sellers) {
+            Intent i = new Intent(ViewArticleDetailsActivity.this, ListSellersActivity.class);
+            context.startActivity(i);
+        } else if(id == R.id.delivered) {
+            Intent i = new Intent(ViewArticleDetailsActivity.this, ListDeliveredOrdersActivity.class);
+            context.startActivity(i);
+//            showResponse("Delivered");
+        } else if(id == R.id.undelivered) {
+            showResponse("Undelivered");
+        } else if(id == R.id.logout) {
+            LoggedUser.logout(this);
+            Intent i = new Intent(ViewArticleDetailsActivity.this, LoginActivity.class);
+            context.startActivity(i);
+        }
+        return true;
+    }
+
     public void showResponse(String response) {
         Toast.makeText(getApplicationContext(),response, Toast.LENGTH_LONG).show();
     }
-
-
-//    private boolean DownlodImage(ResponseBody body) {
-//        try {
-//            Log.i(TAG, "Downloading img, reading and writing file");
-//            InputStream in = null;
-//            FileOutputStream out = null;
-//
-//            try {
-//                in = body.byteStream();
-//                out = new FileOutputStream(getExternalFilesDir(null) + File.separator + "Android ");
-//            }
-//        }
-//    }
 }

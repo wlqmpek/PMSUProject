@@ -39,13 +39,16 @@ public interface ArticleServices {
     @PUT("articles/{id}")
     Call<Article> updateArticle(@Path("id") Long id, @Body CreateArticleDTO createArticleDTO);
 
+    @PUT("article/picture/{id}")
+    Call<Response> updateArticlePicture(@Path("id") Long id, @Part MultipartBody.Part image);
+
     @Multipart
     @POST("articles/picture")
-    Call<Long> saveImage(@Part MultipartBody.Part image);
+    Call<Long> savePicture(@Part MultipartBody.Part image);
 
     @DELETE("articles/{id}")
     Call<Response> deleteArticle(@Path("id") Long id);
 
     @GET("articles/picture/{id}")
-    Call<Picture> getArticleImage(@Path("id") Long id);
+    Call<Picture> getArticlePicture(@Path("id") Long id);
 }

@@ -1,6 +1,7 @@
 package com.example.pmsu_project.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmsu_project.R;
+import com.example.pmsu_project.activities.buyers.ViewArticleDetailsActivity;
+import com.example.pmsu_project.activities.sellers.EditArticleActivity;
 import com.example.pmsu_project.models.Article;
 
 import java.util.ArrayList;
@@ -50,7 +53,7 @@ public class ListSellerArticlesAdapter extends RecyclerView.Adapter<ListSellerAr
         return articles.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView name, price;
         Switch aSwitch;
@@ -58,6 +61,7 @@ public class ListSellerArticlesAdapter extends RecyclerView.Adapter<ListSellerAr
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             name = itemView.findViewById(R.id.listArticleNameTextView2);
             price = itemView.findViewById(R.id.listArticlePriceTextView2);
             aSwitch = itemView.findViewById(R.id.listArticleOnSaleSwitch1);
@@ -80,6 +84,13 @@ public class ListSellerArticlesAdapter extends RecyclerView.Adapter<ListSellerAr
 //
 //                }
 //            });
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(context, ViewArticleDetailsActivity.class);
+            i.putExtra("Article", articles.get(getAdapterPosition()));
+            context.startActivity(i);
         }
     }
 
