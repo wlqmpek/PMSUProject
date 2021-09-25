@@ -88,17 +88,17 @@ public class ListDeliveredOrdersActivity extends AppCompatActivity {
 
         if(id == R.id.sellers) {
             Intent i = new Intent(ListDeliveredOrdersActivity.this, ListSellersActivity.class);
-            context.startActivity(i);
+            startActivity(i);
         } else if(id == R.id.delivered) {
             Intent i = new Intent(ListDeliveredOrdersActivity.this, ListDeliveredOrdersActivity.class);
-            context.startActivity(i);
+            startActivity(i);
 //            showResponse("Delivered");
         } else if(id == R.id.undelivered) {
             showResponse("Undelivered");
         } else if(id == R.id.logout) {
             LoggedUser.logout(this);
             Intent i = new Intent(ListDeliveredOrdersActivity.this, LoginActivity.class);
-            context.startActivity(i);
+            startActivity(i);
         }
         return true;
     }

@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -168,8 +169,10 @@ public class ViewArticleDetailsActivity extends AppCompatActivity {
             String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
             if(isStoragePermissionGranted()){
                 File file = new File(root, picture.getName());
-                if (file.exists ())
+                if (file.exists ()) {
                     file.delete ();
+                }
+
 
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(attaData);
@@ -198,12 +201,12 @@ public class ViewArticleDetailsActivity extends AppCompatActivity {
         String TAG = "Storage Permission";
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
+                    == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Log.v(TAG, "Permission is granted");
                 return true;
             } else {
                 Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
             }
         }
@@ -236,6 +239,17 @@ public class ViewArticleDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (!Arrays.asList(grantResults).contains(PackageManager.PERMISSION_DENIED)) {
+                //all permissions have been granted
+
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.buyer_menu, menu);
@@ -249,17 +263,17 @@ public class ViewArticleDetailsActivity extends AppCompatActivity {
 
         if(id == R.id.sellers) {
             Intent i = new Intent(ViewArticleDetailsActivity.this, ListSellersActivity.class);
-            context.startActivity(i);
+            startActivity(i);
         } else if(id == R.id.delivered) {
             Intent i = new Intent(ViewArticleDetailsActivity.this, ListDeliveredOrdersActivity.class);
-            context.startActivity(i);
+            startActivity(i);
 //            showResponse("Delivered");
         } else if(id == R.id.undelivered) {
             showResponse("Undelivered");
         } else if(id == R.id.logout) {
             LoggedUser.logout(this);
             Intent i = new Intent(ViewArticleDetailsActivity.this, LoginActivity.class);
-            context.startActivity(i);
+            startActivity(i);
         }
         return true;
     }

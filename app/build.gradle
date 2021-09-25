@@ -45,6 +45,4 @@ dependencies {
     //JWT
     implementation 'com.auth0.android:jwtdecode:2.0.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

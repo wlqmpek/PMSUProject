@@ -14,7 +14,7 @@ import com.example.pmsu_project.services.SellerServices;
 public class ApiUtils {
     private ApiUtils() {}
 
-    public static final String BASE_URL = "http://192.168.0.104:8080/osa/";
+    public static final String BASE_URL = "http://192.168.180.249:8080/osa/";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static AuthServices getAuthService() {

@@ -13,10 +13,6 @@ import com.example.pmsu_project.dtos.CreateArticleDTO;
 import com.example.pmsu_project.models.Article;
 import com.example.pmsu_project.models.Picture;
 import com.example.pmsu_project.services.ArticleServices;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Intent;

@@ -214,20 +214,20 @@ public class ListSellerArticlesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.sellers) {
-            Intent i = new Intent(ListSellerArticlesActivity.this, ListDeliveredOrdersActivity.class);
-            context.startActivity(i);
             showResponse("Sellers");
+            Intent i = new Intent(ListSellerArticlesActivity.this, ListSellersActivity.class);
+            startActivity(i);
         } else if(id == R.id.delivered) {
             Intent i = new Intent(ListSellerArticlesActivity.this, ListDeliveredOrdersActivity.class);
-            context.startActivity(i);
-//            showResponse("Delivered");
+            startActivity(i);
+            showResponse("Delivered");
         } else if(id == R.id.undelivered) {
             showResponse("Undelivered");
         } else if(id == R.id.logout) {
             showResponse("Logout");
             LoggedUser.logout(this);
             Intent i = new Intent(ListSellerArticlesActivity.this, LoginActivity.class);
-            context.startActivity(i);
+            startActivity(i);
         }
         return true;
     }
